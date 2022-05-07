@@ -1,0 +1,86 @@
+{
+	"pages": [
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+			"path": "pages/new/new",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/hot/hot",
+			"style": {
+				"navigationBarTitleText": "任务",
+				"enablePullDownRefresh": false
+			}
+		},
+		/*{
+			"path": "pages/tag/tag",
+			"style": {
+				"navigationBarTitleText": "识别"
+			}
+		},*/
+		{
+			"path": "pages/center/center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/help/help",
+			"style": {
+				"navigationBarTitleText": "帮助"
+			}
+		},
+		{
+			"path": "pages/weather/weather",
+			"style": {
+				"navigationBarTitleText": "天气"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "救援指挥系统",
+		"navigationBarBackgroundColor": "#5596bd",
+		"backgroundColor": "#efefef"
+	},
+	"tabBar": {
+		"color": "#95949a",
+		"selectedColor": "#5596bd",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/new/new",
+				"iconPath": "static/index-0.png",
+				"selectedIconPath": "static/index-1.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/hot/hot",
+				"iconPath": "static/hot-0.png",
+				"selectedIconPath": "static/hot-1.png",
+				"text": "任务"
+			},
+			/*{
+				"pagePath": "pages/tag/tag",
+				"iconPath": "static/tag-0.png",
+				"selectedIconPath": "static/tag-1.png",
+				"text": "识别"
+			},*/
+			{
+				"pagePath": "pages/center/center",
+				"iconPath": "static/center-0.png",
+				"selectedIconPath": "static/center-1.png",
+				"text": "我的"
+			}
+		]
+	}
+}

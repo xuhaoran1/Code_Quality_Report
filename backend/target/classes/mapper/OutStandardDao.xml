@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.save.dao.OutStandardDao">
+
+    <resultMap type="com.save.entity.OutStandard" id="OutStandardMap">
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="lostHour" column="lost_hour" jdbcType="INTEGER"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OutStandardMap">
+        select age,
+               lost_hour,
+               id
+        from save.out_standard
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OutStandardMap">
+        select age,
+               lost_hour,
+               id
+        from save.out_standard limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="OutStandardMap">
+        select
+        age, lost_hour, id
+        from save.out_standard
+        <where>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+            <if test="lostHour != null">
+                and lost_hour = #{lostHour}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into save.out_standard(age, lost_hour)
+        values (#{age}, #{lostHour})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into save.out_standard(age, lost_hour)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.age}, #{entity.lostHour})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into save.out_standard(age, lost_hour)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.age}, #{entity.lostHour})
+        </foreach>
+        on duplicate key update
+        age = values(age) , lost_hour = values(lost_hour)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update save.out_standard
+        <set>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="lostHour != null">
+                lost_hour = #{lostHour},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from save.out_standard
+        where id = #{id}
+    </delete>
+
+    <!--查找最新的标准-->
+    <select id="queryLast" resultMap="OutStandardMap">
+        select * from save.out_standard ORDER BY id DESC LIMIT 1
+    </select>
+
+</mapper>

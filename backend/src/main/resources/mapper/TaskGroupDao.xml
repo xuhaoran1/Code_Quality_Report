@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.save.dao.TaskGroupDao">
+
+    <resultMap type="com.save.entity.TaskGroup" id="TaskGroupMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="taskId" column="task_id" jdbcType="INTEGER"/>
+        <result property="mem1Id" column="mem1_id" jdbcType="INTEGER"/>
+        <result property="mem2Id" column="mem2_id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TaskGroupMap">
+        select id,
+               task_id,
+               mem1_id,
+               mem2_id,
+               create_time
+        from save.task_group
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TaskGroupMap">
+        select id,
+               task_id,
+               mem1_id,
+               mem2_id,
+               create_time
+        from save.task_group limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TaskGroupMap">
+        select
+        id, task_id, mem1_id, mem2_id, create_time
+        from save.task_group
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="taskId != null">
+                and task_id = #{taskId}
+            </if>
+            <if test="mem1Id != null">
+                and mem1_id = #{mem1Id}
+            </if>
+            <if test="mem2Id != null">
+                and mem2_id = #{mem2Id}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into save.task_group(task_id, mem1_id, mem2_id, create_time)
+        values (#{taskId}, #{mem1Id}, #{mem2Id}, #{createTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into save.task_group(task_id, mem1_id, mem2_id, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.taskId}, #{entity.mem1Id}, #{entity.mem2Id}, #{entity.createTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into save.task_group(task_id, mem1_id, mem2_id, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.taskId}, #{entity.mem1Id}, #{entity.mem2Id}, #{entity.createTime})
+        </foreach>
+        on duplicate key update
+        task_id = values(task_id) , mem1_id = values(mem1_id) , mem2_id = values(mem2_id) , create_time =
+        values(create_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update save.task_group
+        <set>
+            <if test="taskId != null">
+                task_id = #{taskId},
+            </if>
+            <if test="mem1Id != null">
+                mem1_id = #{mem1Id},
+            </if>
+            <if test="mem2Id != null">
+                mem2_id = #{mem2Id},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from save.task_group
+        where id = #{id}
+    </delete>
+
+</mapper>
